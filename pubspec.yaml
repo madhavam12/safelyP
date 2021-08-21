@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.11.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -28,6 +28,53 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  
+  cloud_firestore: ^2.4.0
+  paginate_firestore: ^1.0.2
+  firebase_messaging: ^10.0.5
+  
+  geocoder: ^0.2.1
+  firebase_auth: ^3.0.1
+  rflutter_alert: ^2.0.4
+  firebase_storage: ^10.0.1
+  geoflutterfire: ^3.0.1
+  
+  url_launcher: ^6.0.9
+  flutter_riverpod: ^0.14.0+3
+  geocoding: ^2.0.0
+  hive_flutter: ^1.1.0
+  liquid_ui: ^1.0.0+9
+  
+  shrink_sidemenu: ^2.0.0+1-null-safety
+  connection_verify: ^1.0.4
+  geolocator: ^7.4.0
+  hive: ^2.0.4
+  line_awesome_flutter: ^2.0.0
+  google_sign_in: ^5.0.7
+  
+  firebase_core: ^1.4.0
+  
+  dot_navigation_bar: ^0.2.0
+  
+
+  fluttertoast: 8.0.6
+  
+
+  
+  
+  
+  
+
+  
+  
+  simple_connection_checker: ^0.2.1
+
+  
+  
+  
+
+  intl: 0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -39,10 +86,30 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-VariableFont_wght.ttf
+
+
+    - family: QuickSand
+      fonts:
+        - asset: assets/fonts/Quicksand-VariableFont_wght.ttf
+        
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  
 
   # To add assets to your application, add an assets section, like this:
   # assets:
