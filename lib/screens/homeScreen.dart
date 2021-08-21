@@ -5,6 +5,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'constant.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -49,76 +50,76 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.blue,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              margin: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: GestureDetector(
-                            onTap: () {
-                              final _state = _endSideMenuKey.currentState;
+          child: Container(
+            margin: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: GestureDetector(
+                          onTap: () {
+                            final _state = _endSideMenuKey.currentState;
 
-                              if (_state.isOpened)
-                                _state.closeSideMenu();
-                              else
-                                _state.openSideMenu();
-                            },
-                            child: Icon(LineAwesomeIcons.bars,
-                                color: Colors.white, size: 40),
+                            if (_state.isOpened)
+                              _state.closeSideMenu();
+                            else
+                              _state.openSideMenu();
+                          },
+                          child: Icon(LineAwesomeIcons.bars,
+                              color: Colors.white, size: 40),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 15.0, top: 0),
+                        child: Text(
+                          "${DateFormat('EEEE').format(DateTime.now())}, $formatter",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "QuickSand",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(right: 15.0, top: 0),
-                          child: Text(
-                            "${DateFormat('EEEE').format(DateTime.now())}, $formatter",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "QuickSand",
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      child: Text(
-                        "All Help Requests",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "QuickSand",
-                          fontSize: 25,
-                        ),
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    child: Text(
+                      "All Help Requests",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "QuickSand",
+                        fontSize: 25,
                       ),
                     ),
                   ),
-                  SizedBox(height: 35),
-                  StreamBuilder<QuerySnapshot<Map>>(
-                      stream: FirebaseFirestore.instance
-                          .collection('requests')
-                          .where('nearbyUsersUID', arrayContainsAny: [
-                            FirebaseAuth.instance.currentUser.uid
-                          ])
-                          .orderBy('timeStamp', descending: true)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Center(
+                ),
+                SizedBox(height: 35),
+                StreamBuilder<QuerySnapshot<Map>>(
+                    stream: FirebaseFirestore.instance
+                        .collection('requests')
+                        .where('nearbyUsersUID', arrayContainsAny: [
+                          FirebaseAuth.instance.currentUser.uid
+                        ])
+                        .orderBy('timeStamp', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Image.asset('assets/images/nf.png',
@@ -134,17 +135,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             ),
-                          );
-                        }
-                        if (snapshot.connectionState ==
-                                ConnectionState.active &&
-                            !snapshot.hasData) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView.builder(
-                            shrinkWrap: true,
+                          ),
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.active &&
+                          !snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Expanded(
+                        child: ListView.builder(
                             itemCount: snapshot.data.docs.length,
                             itemBuilder: (context, index) {
                               Timestamp time =
@@ -155,7 +156,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   new DateFormat.yMMMMd('en_US');
 
                               String formatted = formatter.format(dt);
-
+                              List colors = [
+                                Colors.orange,
+                                Colors.orangeAccent,
+                                Colors.orange,
+                                Colors.orangeAccent,
+                                Colors.orange,
+                                Colors.orangeAccent,
+                                Colors.orange,
+                                Colors.orangeAccent,
+                                Colors.orange,
+                                Colors.orangeAccent,
+                              ];
                               colors.shuffle();
 
                               return Container(
@@ -177,10 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "Help requested on $formatted at ${snapshot.data.docs[index].data()['address']}",
                                 ),
                               );
-                            });
-                      }),
-                ],
-              ),
+                            }),
+                      );
+                    }),
+              ],
             ),
           ),
         ),
@@ -188,12 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-List colors = [
-  kOrangeColor,
-  kBlueColor,
-  kYellowColor,
-];
 
 class RequestCard extends StatelessWidget {
   String title;
@@ -213,7 +219,7 @@ class RequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: bgColor.withOpacity(0.1),
+        color: bgColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -222,7 +228,7 @@ class RequestCard extends StatelessWidget {
           title: Text(
             title,
             style: TextStyle(
-              color: kTitleTextColor,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -231,7 +237,7 @@ class RequestCard extends StatelessWidget {
               Text(
                 description,
                 style: TextStyle(
-                  color: kTitleTextColor.withOpacity(0.7),
+                  color: Colors.white.withOpacity(0.7),
                 ),
               ),
               SizedBox(height: 20),
