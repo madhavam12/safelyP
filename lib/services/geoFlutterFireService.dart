@@ -9,7 +9,7 @@ import 'package:safely_p/models/requestModel.dart';
 import 'firestoreDatabaseService.dart';
 import 'package:geocoder/geocoder.dart' as coder;
 import 'package:safely_p/services/firebaseMessagingService.dart';
-
+import 'package:safely_p/models/boothModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GeoFire {
@@ -33,8 +33,10 @@ class GeoFire {
     return stream;
   }
 
-  writeGeoPoint({List<String> tokens}) async {
+  writeGeoPoint() async {
     try {
+      FireMessage fcm = FireMessage();
+      String token = await fcm.deviceToken;
       Position pos = await _determinePosition();
       Firestore db = Firestore();
 
@@ -44,8 +46,8 @@ class GeoFire {
           geo.point(latitude: pos.latitude, longitude: pos.longitude);
 
       await db.writeLoc(
-        req: RequestModel(
-            deviceTokensNearby: tokens,
+        booth: BoothModel(
+            deviceToken: token,
             address: address,
             name: FirebaseAuth.instance.currentUser.displayName,
             userId: FirebaseAuth.instance.currentUser.uid,

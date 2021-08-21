@@ -4,6 +4,9 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:safely_p/services/firebaseAuthService.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:safely_p/screens/loginScreen.dart';
+import '../tnCPage.dart';
+import '../creditsPage.dart';
+import '../privacyPolicyPage.dart';
 
 Widget buildMenu(context, _endSideMenuKey) {
   return SingleChildScrollView(
@@ -35,7 +38,10 @@ Widget buildMenu(context, _endSideMenuKey) {
         ),
         LListItem(
           backgroundColor: Colors.transparent,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => TNCPage()));
+          },
           leading: Icon(LineAwesomeIcons.paperclip,
               size: 22.50, color: Colors.black),
           title: Text("Terms and Conditions",
@@ -52,8 +58,8 @@ Widget buildMenu(context, _endSideMenuKey) {
         LListItem(
           backgroundColor: Colors.transparent,
           onTap: () {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => PrivacyPolicyPage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PrivacyPolicyPage()));
           },
           leading:
               Icon(LineAwesomeIcons.file, size: 22.50, color: Colors.black),
@@ -70,7 +76,10 @@ Widget buildMenu(context, _endSideMenuKey) {
         ),
         LListItem(
           backgroundColor: Colors.transparent,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CreditsPage()));
+          },
           leading:
               Icon(LineAwesomeIcons.feather, size: 22.50, color: Colors.black),
           title: Text("Credits",
