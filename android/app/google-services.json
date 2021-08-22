@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "797365434200-sicv2le66j31v7sonhn97l82bjom8l1n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.safely.safetyapp",
+            "certificate_hash": "3da6fe9d3ccdb3d1c0dc2d9a859409113308cceb"
+          }
+        },
+        {
           "client_id": "797365434200-78ccosojuqpgft515c6ikl274ubv4u00.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -56,6 +64,14 @@
           "android_info": {
             "package_name": "com.example.safely_p",
             "certificate_hash": "8f3aa0b2b968193f7bf038b0d82b144b425e9792"
+          }
+        },
+        {
+          "client_id": "797365434200-tqvtocpre35sgcoo2up1stbq6n7pbr2o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.safely_p",
+            "certificate_hash": "45818aca1305a1b0a497b4359b148cc20e5880a0"
           }
         },
         {

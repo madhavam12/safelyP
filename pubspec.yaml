@@ -52,7 +52,7 @@ dependencies:
   geolocator: ^7.4.0
   
   line_awesome_flutter: ^2.0.0
-  
+  google_sign_in: ^5.0.7
   
   firebase_core: ^1.4.0
   
