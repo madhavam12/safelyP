@@ -1,17 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:geocoding/geocoding.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hive/hive.dart';
-import 'package:geolocator/geolocator.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
+  String get uid => _auth.currentUser.uid;
 //signs out the current user
   Future signOut() async {
     await _auth.signOut();

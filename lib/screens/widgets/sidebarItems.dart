@@ -3,7 +3,7 @@ import 'package:liquid_ui/liquid_ui.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:safely_p/services/firebaseAuthService.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:safely_p/screens/loginScreen.dart';
+import 'package:safely_p/screens/phoneAuthView.dart';
 import '../tnCPage.dart';
 import '../creditsPage.dart';
 import '../privacyPolicyPage.dart';
@@ -143,7 +143,7 @@ Widget buildMenu(context, _endSideMenuKey) {
             await _authService.signOut();
             Navigator.pop(context);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+                MaterialPageRoute(builder: (context) => PhoneAuthView()));
           },
           leading: Icon(LineAwesomeIcons.arrow_left,
               size: 22.50, color: Colors.black),

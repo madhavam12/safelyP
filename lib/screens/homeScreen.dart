@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:safely_p/screens/widgets/widgets.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-import 'widgets/sidebarItems.dart';
+import 'widgets/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'constant.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:safely_p/services/geoFlutterFireService.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:safely_p/services/services.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -31,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     geoFire.writeGeoPoint();
   }
 
+  FirebaseAuthService auth = FirebaseAuthService();
   bool hasRequested = false;
   @override
   Widget build(BuildContext context) {
@@ -111,39 +108,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 StreamBuilder<QuerySnapshot<Map>>(
                     stream: FirebaseFirestore.instance
                         .collection('requests')
-                        .where('nearbyUsersUID', arrayContainsAny: [
-                          FirebaseAuth.instance.currentUser.uid
-                        ])
+                        .where('nearbyUsersUID', arrayContainsAny: [auth.uid])
                         .orderBy('timeStamp', descending: true)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Image.asset('assets/images/nf.png',
-                                    height: 250),
-                                Text(
-                                  "No requests found",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "QuickSand",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return NoRequests();
                       }
                       if (snapshot.connectionState == ConnectionState.active &&
                           !snapshot.hasData) {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
                         );
                       }
+                      if (snapshot.data.docs.length == 0) {
+                        return NoRequests();
+                      }
+
                       return Expanded(
                         child: ListView.builder(
                             itemCount: snapshot.data.docs.length,
@@ -157,14 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               String formatted = formatter.format(dt);
                               List colors = [
-                                Colors.orange,
-                                Colors.orangeAccent,
-                                Colors.orange,
-                                Colors.orangeAccent,
-                                Colors.orange,
-                                Colors.orangeAccent,
-                                Colors.orange,
-                                Colors.orangeAccent,
                                 Colors.orange,
                                 Colors.orangeAccent,
                               ];
@@ -194,90 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class RequestCard extends StatelessWidget {
-  String title;
-  String description;
-  String latitude;
-  String longitude;
-  Color bgColor;
-
-  RequestCard(
-      {this.title,
-      this.latitude,
-      this.longitude,
-      this.description,
-      this.bgColor});
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: ListTile(
-          title: Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Column(
-            children: [
-              Text(
-                description,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
-                ),
-              ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: () async {
-                  String _url =
-                      'https://www.google.com/maps/place/$latitude,$longitude';
-                  await canLaunch(_url)
-                      ? await launch(_url)
-                      : Fluttertoast.showToast(
-                          msg:
-                              "No internet connection, please connect to the internet",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue,
-                          blurRadius: 5.0,
-                        ),
-                      ],
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Text(
-                    "Open Maps",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "QuickSand",
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ),
-            ],
           ),
         ),
       ),

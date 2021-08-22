@@ -4,7 +4,6 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:safely_p/models/requestModel.dart';
 
 import 'firestoreDatabaseService.dart';
 import 'package:geocoder/geocoder.dart' as coder;
@@ -13,12 +12,14 @@ import 'package:safely_p/models/boothModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GeoFire {
+  //creates instance of geoflutterfire
   final geo = Geoflutterfire();
   final _firestore = FirebaseFirestore.instance;
 
-  Stream<List<DocumentSnapshot>> stream;
+  Stream<List<DocumentSnapshot>> stream; //stream which yields neabry docs
 
   Future<Stream> triggerBoothsStream() async {
+    // triggers the stream
     Position pos = await _determinePosition();
     GeoFirePoint center =
         geo.point(latitude: pos.latitude, longitude: pos.longitude);
@@ -34,6 +35,7 @@ class GeoFire {
   }
 
   writeGeoPoint() async {
+    //writes the current user's loc to firestore
     try {
       FireMessage fcm = FireMessage();
       String token = await fcm.deviceToken;
@@ -47,6 +49,7 @@ class GeoFire {
 
       await db.writeLoc(
         booth: BoothModel(
+            phone: FirebaseAuth.instance.currentUser.phoneNumber,
             deviceToken: token,
             address: address,
             name: FirebaseAuth.instance.currentUser.displayName,
@@ -66,6 +69,7 @@ class GeoFire {
   }
 
   _getLocalityName(Position pos) async {
+    //returns the addressline
     final coordinates = coder.Coordinates(pos.latitude, pos.longitude);
     var addresses =
         await coder.Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -74,6 +78,7 @@ class GeoFire {
   }
 
   Future<Position> _determinePosition() async {
+    //requests and determines user's locations
     bool serviceEnabled;
     LocationPermission permission;
 

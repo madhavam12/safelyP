@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'screens/loginScreen.dart';
 import 'package:simple_connection_checker/simple_connection_checker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:async/async.dart';
@@ -9,6 +8,7 @@ import 'dart:async';
 import 'screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:liquid_ui/liquid_ui.dart';
+import 'screens/PhoneAuthView.dart';
 
 void main() async {
   //checks for connection in background nd shows a toat when not connected
@@ -32,6 +32,6 @@ void main() async {
   if (FirebaseAuth.instance.currentUser != null) {
     runApp(LiquidApp(materialApp: MaterialApp(home: HomeScreen())));
   } else {
-    runApp(LiquidApp(materialApp: MaterialApp(home: LoginScreen())));
+    runApp(LiquidApp(materialApp: MaterialApp(home: PhoneAuthView())));
   }
 }
