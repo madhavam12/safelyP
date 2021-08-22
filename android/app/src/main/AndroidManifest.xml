@@ -4,8 +4,8 @@
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
    <application
-        android:label="safely_p"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Safely Officers"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -112,7 +112,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       'Enter code sent to +91-${widget.phone}',
                       style: TextStyle(
                         letterSpacing: 0.5,
-                        fontSize: 20,
+                        fontSize: 17,
                         fontFamily: "QuickSand",
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
@@ -186,55 +186,6 @@ class _OTPScreenState extends State<OTPScreen> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: new LinearGradient(
-                              colors: [
-                                Colors.white10,
-                                Colors.white,
-                              ],
-                              begin: const FractionalOffset(0.0, 0.0),
-                              end: const FractionalOffset(1.0, 1.0),
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
-                        ),
-                        width: 100.0,
-                        height: 1.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                        child: Text(
-                          "Or",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontFamily: "WorkSansMedium"),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: new LinearGradient(
-                              colors: [
-                                Colors.white,
-                                Colors.white10,
-                              ],
-                              begin: const FractionalOffset(0.0, 0.0),
-                              end: const FractionalOffset(1.0, 1.0),
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
-                        ),
-                        width: 100.0,
-                        height: 1.0,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
               ],
             ),
           ),

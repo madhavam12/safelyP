@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       type: SideMenuType.slide,
       menu: buildMenu(context, _endSideMenuKey),
       child: Scaffold(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blueAccent,
         body: SafeArea(
           child: Container(
             margin: EdgeInsets.all(20),
@@ -134,22 +134,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               Timestamp time =
                                   snapshot.data.docs[index].data()['timeStamp'];
                               DateTime dt = time.toDate();
+                              String formattedTime =
+                                  DateFormat('kk:mm:a').format(dt);
 
                               final DateFormat formatter =
                                   new DateFormat.yMMMMd('en_US');
 
                               String formatted = formatter.format(dt);
-                              List colors = [
-                                Colors.orange,
-                                Colors.orangeAccent,
-                              ];
-                              colors.shuffle();
 
                               return Container(
                                 margin: EdgeInsets.only(
                                   bottom: 25,
                                 ),
                                 child: RequestCard(
+                                  time: formattedTime,
                                   latitude: snapshot.data.docs[index]
                                       .data()['loc']['geopoint']
                                       .latitude
@@ -158,10 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .data()['loc']['geopoint']
                                       .longitude
                                       .toString(),
-                                  bgColor: colors[0],
                                   title: "On $formatted",
+                                  photoURL: snapshot.data.docs[index]
+                                      .data()['photoURL'],
                                   description:
-                                      "Help requested on $formatted at ${snapshot.data.docs[index].data()['address']}",
+                                      "${snapshot.data.docs[index].data()['name']} requested help on $formatted at ${snapshot.data.docs[index].data()['address']}",
                                 ),
                               );
                             }),
